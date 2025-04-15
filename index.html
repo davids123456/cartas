@@ -25,12 +25,33 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
+      height: 100%;
       color: rgb(0, 0, 0);
       text-align: center;
       font-family: 'Times New Roman', serif;
       position: relative;
+      margin: 0;
     }
     
+    .pantalla {
+      display: none;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: none;
+      padding: 20px;
+      z-index: 5; /* Asegura que la pantalla esté en primer plano */
+      overflow-y: auto; /* Asegura que el contenido dentro de la pantalla se pueda desplazar si es necesario */
+    }
+
+    .activa {
+      display: block;
+    }
+    .pantalla:not(.activa) {
+      display: none !important;
+    }
     h2, p {
       color: #000000;
       text-shadow: 2px 2px 4px #ffffff, -2px -2px 4px #ffffff;
@@ -41,32 +62,18 @@
       font-weight: bold;
       color: #070707;
     }
-
-    .pantalla {
-      display: none;
-      min-height: 100vh;
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    .activa {
-      display: block;
-    }
-
+    
     .inicio {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items:  center;
       flex-direction: column;
       height: 100vh;
-      background: none; /* Eliminar el fondo rosa */
-      padding: 20px;
+      margin: 0;
     }
 
     .contenido {
-      background-color: rgba(255, 255, 255, 0.85); /* Fondo blanco semi-transparente */
+      background: none;
       padding: 20px;
       border-radius: 15px;
       width: 95%;
@@ -87,6 +94,8 @@
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s ease-in-out;
       text-shadow: 2px 2px 4px #ffffff, -2px -2px 4px #ffffff;
+      margin: 0; /* Asegura que no haya márgenes */
+
     }
 
     .boton-inicio:hover {
@@ -151,8 +160,9 @@
       cursor: pointer;
       font-weight: bold;
       transition: 0.3s;
+      text-shadow: 2px 2px 4px #ffffff, -2px -2px 4px #ffffff;
     }
-
+   
     .boton:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }
@@ -224,7 +234,7 @@
     }
     
     .mensaje-texto {
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.5);
       padding: 15px;
       border-radius: 10px;
       margin-bottom: 20px;
@@ -251,31 +261,30 @@
         max-width: 100%;
       }
     }
+   
   </style>
 </head>
-<body>
+<div>
 
-  <!-- Pantalla de inicio -->
   <div class="pantalla activa inicio" id="pantalla0">
     <button class="boton-inicio" id="btnInicio">
-      <span class="emoji">💜</span> Presiona aquí Jennifer
+      <span class="emoji">💜</span> Presione Jennifer y lealo todo por fis
     </button>
   </div>
 
-  <!-- Pantalla principal -->
   <div class="pantalla" id="pantalla1">
     <div class="contenido">
-      <iframe
-        src="https://open.spotify.com/embed/track/2GSr8anleCXKLNjjjijoMZ?si=9c7f3562eedc4722"
-        height="80" frameborder="0"
-        allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy">
-      </iframe>
-      <hr>
+        <iframe
+            src="https://open.spotify.com/embed/track/2GSr8anleCXKLNjjjijoMZ?si=9c7f3562eedc4722"
+            height="80" frameborder="0"
+            allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+        </iframe>
+        <hr>
 
-      <div class="slider">
-        <div class="corazones" id="corazones"></div>
-        <div class="slides" id="carrusel">
+        <div class="slider">
+            <div class="corazones" id="corazones"></div>
+            <div class="slides" id="carrusel">
           <img src="imagen.jpg" alt="Foto 1" />
           <img src="Foto2.jpg" alt="Foto 2" />
           <img src="Foto3.jpg" alt="Foto 3" />
@@ -311,7 +320,7 @@ Gracias por los recuerdos, por tu sonrisa, por tu cariño… aunque haya sido br
 
 <strong>Con cariño</strong> <u>David Cundulli</u>
       </div>
-      <button class="boton boton-sorpresa" onclick="mostrarPantalla2()">
+      <button class="boton boton-sorpresa" id="btnSorpresa">
         Presiona este botoncito igual plis 🎁
       </button>
    
@@ -364,73 +373,91 @@ Gracias por los recuerdos, por tu sonrisa, por tu cariño… aunque haya sido br
          <a href="https://vm.tiktok.com/ZMBbEbqUf/" target="_blank">TikTok Video</a>
          <br>Te cuidas, mi amiga, mi pana de toda la vida 💕
       </p>
-      <button class="boton" onclick="volverInicio()">
+      <button class="boton" id="btnVolver">
         Vuelve al inicio si deseas volver a verlo 🔁
       </button>
     </div>
   </div>
 
   <script>
-    // Asegurar que las pantallas estén correctamente configuradas al cargar
-    window.onload = function() {
-      // Asegura que siempre empiece desde pantalla0
-      document.getElementById("pantalla0").classList.add("activa");
-      document.getElementById("pantalla1").classList.remove("activa");
-      document.getElementById("pantalla2").classList.remove("activa");
-    };
-
-    document.addEventListener("DOMContentLoaded", () => {
-      // Cambiar pantalla de inicio a pantalla principal
-      const botonInicio = document.getElementById("btnInicio");
-      botonInicio.addEventListener("click", () => {
-        document.getElementById("pantalla0").classList.remove("activa");
-        document.getElementById("pantalla1").classList.add("activa");
-        // Ocultar completamente el botón después de presionarlo
-        document.getElementById("pantalla0").style.display = "none";
-        window.scrollTo(0, 0); // Scroll to top when changing screens
+    // Esperamos a que el DOM esté completamente cargado
+    document.addEventListener("DOMContentLoaded", function() {
+      // Elementos principales
+      const pantalla0 = document.getElementById("pantalla0");
+      const pantalla1 = document.getElementById("pantalla1");
+      const pantalla2 = document.getElementById("pantalla2");
+      const btnInicio = document.getElementById("btnInicio");
+      const btnSorpresa = document.getElementById("btnSorpresa");
+      const btnVolver = document.getElementById("btnVolver");
+  
+      // Función para mostrar una pantalla y ocultar las demás
+      function mostrarPantalla(pantallaActiva) {
+        // Ocultar todas las pantallas
+        pantalla0.classList.remove("activa");
+        pantalla1.classList.remove("activa");
+        pantalla2.classList.remove("activa");
+        
+        // Mostrar la pantalla activa
+        pantallaActiva.classList.add("activa");
+        
+        // Scroll al inicio
+        window.scrollTo(0, 0); // Asegura que siempre empiece desde la parte superior
+      }
+  
+      // Evento para botón inicial
+      btnInicio.addEventListener("click", function() {
+        mostrarPantalla(pantalla1);  // Cambia a pantalla1
+        iniciarCorazones();
+        iniciarCarrusel();
       });
-
-      // Carrusel
-      const carrusel = document.getElementById("carrusel");
-      const imagenes = carrusel.querySelectorAll("img");
-      let index = 0;
-
-      setInterval(() => {
-        index = (index + 1) % imagenes.length;
-        carrusel.style.transform = `translateX(-${index * 100}%)`;
-      }, 3000);
+  
+      // Evento para botón de sorpresa
+      btnSorpresa.addEventListener("click", function() {
+        mostrarPantalla(pantalla2);  // Cambia a pantalla2
+      });
+  
+      // Evento para botón de volver
+      btnVolver.addEventListener("click", function() {
+        mostrarPantalla(pantalla0);  // Cambia a pantalla0
+      });
+  
+      // Carrusel de imágenes
+      function iniciarCarrusel() {
+        const carrusel = document.getElementById("carrusel");
+        const imagenes = carrusel.querySelectorAll("img");
+        let index = 0;
+  
+        return setInterval(() => {
+          index = (index + 1) % imagenes.length;
+          carrusel.style.transform = `translateX(-${index * 100}%)`;
+        }, 3000);
+      }
+  
+      // Lluvia de corazones
+      function iniciarCorazones() {
+        const contenedorCorazones = document.getElementById("corazones");
+  
+        function crearCorazon() {
+          const corazon = document.createElement("div");
+          corazon.classList.add("corazon");
+          corazon.innerHTML = "💖";
+          corazon.style.left = Math.random() * 100 + "%";
+          const size = Math.random() * 10 + 15;
+          corazon.style.fontSize = `${size}px`;
+          contenedorCorazones.appendChild(corazon);
+          
+          setTimeout(() => {
+            corazon.remove();
+          }, 3000);
+        }
+  
+        return setInterval(crearCorazon, 300);
+      }
+  
+      // Asegurarse de que pantalla0 sea la única visible al inicio
+      mostrarPantalla(pantalla0);  // Mostrar solo pantalla0 al principio
     });
-
-    // Lluvia de corazones
-    const contenedorCorazones = document.getElementById("corazones");
-
-    function crearCorazon() {
-      const corazon = document.createElement("div");
-      corazon.classList.add("corazon");
-      corazon.innerHTML = "💖";
-      corazon.style.left = Math.random() * 100 + "%";
-      const size = Math.random() * 10 + 15;
-      corazon.style.fontSize = `${size}px`;
-      contenedorCorazones.appendChild(corazon);
-      setTimeout(() => {
-        corazon.remove();
-      }, 3000);
-    }
-
-    setInterval(crearCorazon, 300);
-
-    function mostrarPantalla2() {
-      document.getElementById("pantalla1").classList.remove("activa");
-      document.getElementById("pantalla2").classList.add("activa");
-      window.scrollTo(0, 0); // Scroll to top when changing screens
-    }
-
-    function volverInicio() {
-      document.getElementById("pantalla2").classList.remove("activa");
-      document.getElementById("pantalla0").classList.add("activa");
-      document.getElementById("pantalla0").style.display = "block"; // Asegurar que sea visible
-      window.scrollTo(0, 0); // Scroll to top when changing screens
-    }
   </script>
+  
 </body>
 </html>
