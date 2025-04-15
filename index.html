@@ -61,9 +61,17 @@
       align-items: center;
       flex-direction: column;
       height: 100vh;
-      background-color: rgba(1, 28, 57, 0.7);
-      border-radius: 15px;
+      background: none; /* Eliminar el fondo rosa */
       padding: 20px;
+    }
+
+    .contenido {
+      background-color: rgba(255, 255, 255, 0.85); /* Fondo blanco semi-transparente */
+      padding: 20px;
+      border-radius: 15px;
+      width: 95%;
+      max-width: 800px;
+      margin: 20px auto;
     }
 
     .boton-inicio {
@@ -215,6 +223,20 @@
       font-weight: bold;
     }
     
+    .mensaje-texto {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: left;
+      line-height: 1.5;
+    }
+    
+    h1, h2 {
+      font-family: 'Pacifico', cursive;
+      margin: 20px 0;
+    }
+    
     @media (max-width: 768px) {
       .boton-inicio {
         padding: 12px 30px;
@@ -236,13 +258,13 @@
   <!-- Pantalla de inicio -->
   <div class="pantalla activa inicio" id="pantalla0">
     <button class="boton-inicio" id="btnInicio">
-      <span class="emoji">💜</span> Presione Jennifer y lealo todo por fis
+      <span class="emoji">💜</span> Presiona aquí Jennifer
     </button>
   </div>
 
   <!-- Pantalla principal -->
   <div class="pantalla" id="pantalla1">
-    <div class="container">
+    <div class="contenido">
       <iframe
         src="https://open.spotify.com/embed/track/2GSr8anleCXKLNjjjijoMZ?si=9c7f3562eedc4722"
         height="80" frameborder="0"
@@ -269,8 +291,7 @@
       <hr>
       <h2>El día que te conocí ❤️</h2>
       <p id="contador"></p>
-      <p>
-       
+      <div class="mensaje-texto">
         <strong>Hola...</strong> <br>
 No sé si esta carta llegue a ti, o si algún día la leas. Tal vez sea solo una forma de cerrar un ciclo, o quizás una puerta que se vuelve a abrir. No lo sé. Lo único que tengo claro, es que necesitaba escribirte.<br><br>
 
@@ -289,10 +310,9 @@ Yo… solo quiero que seas feliz. Que crezcas, que cumplas todo lo que te propon
 Gracias por los recuerdos, por tu sonrisa, por tu cariño… aunque haya sido breve, fue real.<br><br>
 
 <strong>Con cariño</strong> <u>David Cundulli</u>
-
-      </p>
+      </div>
       <button class="boton boton-sorpresa" onclick="mostrarPantalla2()">
-        Presiona Este botoncito igual plis 🎁
+        Presiona este botoncito igual plis 🎁
       </button>
    
     </div>
@@ -300,7 +320,7 @@ Gracias por los recuerdos, por tu sonrisa, por tu cariño… aunque haya sido br
   
   <!-- Pantalla 2: Segunda sorpresa -->
   <div class="pantalla" id="pantalla2">
-    <div class="container">
+    <div class="contenido">
       <h1>✨ Pero Te Guste ✨</h1>
       <p>Te conocí poco tiempo Jennifer,
         pero fue suficiente para que marcaras algo en mí.
@@ -332,11 +352,9 @@ Gracias por los recuerdos, por tu sonrisa, por tu cariño… aunque haya sido br
       <div class="foto">
         <img src="Foto10.jpg" alt="Foto">
       </div>
-    </div>
-  
-    <hr>
+    
+      <hr>
 
-    <div class="container">
       <h1>✨ Creo eso es todo jaja ✨</h1>
       <p>Nada mas Jennifer, creo esto es lo último que verás sobre mí. ¡Sé feliz, cuídate, 
          pórtate bien y no olvides que te quiero un chingo! 
@@ -353,7 +371,8 @@ Gracias por los recuerdos, por tu sonrisa, por tu cariño… aunque haya sido br
   </div>
 
   <script>
-    window.onload = function () {
+    // Asegurar que las pantallas estén correctamente configuradas al cargar
+    window.onload = function() {
       // Asegura que siempre empiece desde pantalla0
       document.getElementById("pantalla0").classList.add("activa");
       document.getElementById("pantalla1").classList.remove("activa");
@@ -366,6 +385,8 @@ Gracias por los recuerdos, por tu sonrisa, por tu cariño… aunque haya sido br
       botonInicio.addEventListener("click", () => {
         document.getElementById("pantalla0").classList.remove("activa");
         document.getElementById("pantalla1").classList.add("activa");
+        // Ocultar completamente el botón después de presionarlo
+        document.getElementById("pantalla0").style.display = "none";
         window.scrollTo(0, 0); // Scroll to top when changing screens
       });
 
@@ -407,9 +428,9 @@ Gracias por los recuerdos, por tu sonrisa, por tu cariño… aunque haya sido br
     function volverInicio() {
       document.getElementById("pantalla2").classList.remove("activa");
       document.getElementById("pantalla0").classList.add("activa");
+      document.getElementById("pantalla0").style.display = "block"; // Asegurar que sea visible
       window.scrollTo(0, 0); // Scroll to top when changing screens
     }
   </script>
-
 </body>
 </html>
